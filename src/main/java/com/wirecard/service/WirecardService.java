@@ -1,14 +1,11 @@
 package com.wirecard.service;
 
-import com.wirecard.resource.PaymentRequest;
-import com.wirecard.resource.StorageInitRequest;
-import com.wirecard.resource.StorageInitResponse;
-import com.wirecard.resource.StorageResponse;
+import com.wirecard.resource.*;
 
 public interface WirecardService {
     StorageInitResponse initDataStorage(StorageInitRequest params);
 
-    StorageResponse readDataStorage(String storageId);
+    StorageResponse readDataStorage(StorageRequest params);
 
     String initPayment(PaymentRequest params);
 }

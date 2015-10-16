@@ -4,7 +4,6 @@ package com.wirecard.resource;
 import java.net.URL;
 
 public class PaymentRequest {
-    private String customerId;
     private LanguageType language;
     private PaymentType paymentType;
     private String amount; //TODO check how to make it double?
@@ -29,14 +28,6 @@ public class PaymentRequest {
     private String orderIdent;
     private String storageId;
     private String shopId;
-
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
 
     public LanguageType getLanguage() {
         return language;

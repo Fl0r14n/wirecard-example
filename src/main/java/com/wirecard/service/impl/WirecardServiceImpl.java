@@ -2,10 +2,8 @@ package com.wirecard.service.impl;
 
 import com.wirecard.builders.PaymentRequestBuilder;
 import com.wirecard.builders.StorageInitRequestBuilder;
-import com.wirecard.resource.PaymentRequest;
-import com.wirecard.resource.StorageInitRequest;
-import com.wirecard.resource.StorageInitResponse;
-import com.wirecard.resource.StorageResponse;
+import com.wirecard.builders.StorageRequestBuilder;
+import com.wirecard.resource.*;
 import com.wirecard.service.WirecardService;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -38,6 +36,9 @@ public class WirecardServiceImpl implements WirecardService {
 
     @Value("${wirecard.dataStorageInitUrl}")
     private String initUrl;
+
+    @Value("${wirecard.dataStorageReadUrl}")
+    private String storageUrl;
 
     @Value("${wirecard.frontentUrl}")
     private String paymentUrl;
@@ -80,8 +81,22 @@ public class WirecardServiceImpl implements WirecardService {
         return response;
     }
 
+    public StorageResponse marshallToStorageResponse(Map<String, String> vals) {
+        //TODO
+        return null;
+    }
+
     @Override
-    public StorageResponse readDataStorage(String storageId) {
+    public StorageResponse readDataStorage(StorageRequest params) {
+        HttpClient httpClient = HttpClientBuilder.create().build();
+        HttpPost post = new HttpPost(storageUrl);
+        post.setEntity(new StorageRequestBuilder(params).build(clientId, secret));
+        try {
+            HttpEntity response = httpClient.execute(post).getEntity();
+            return marshallToStorageResponse(parseResponse(response.getContent()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
