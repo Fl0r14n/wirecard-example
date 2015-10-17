@@ -19,18 +19,25 @@ import java.net.URL;
 public class WirecardServiceTest {
 
     @Autowired
-    WirecardService wirecardService;
+    private WirecardService wirecardService;
 
-    @Test
-    public void init_data_storage_should_return_result() throws MalformedURLException {
+    private static final String SHOP_ID = "qmore";
+    private static final String ORDER_IDENT = "12345";
+
+    public StorageInitResponse doInitDataStorage() throws MalformedURLException {
         StorageInitRequest sir = new StorageInitRequest();
         {
-            sir.setShopId("qmore");
-            sir.setOrderIdent("12345");
+            sir.setShopId(SHOP_ID);
+            sir.setOrderIdent(ORDER_IDENT);
             sir.setReturnUrl(new URL("http://localhost:80/wirecard/index.php/frontend/fallback_return.php"));
             sir.setLanguage(LanguageType.EN);
         }
-        StorageInitResponse response = wirecardService.initDataStorage(sir);
+        return wirecardService.initDataStorage(sir);
+    }
+
+    @Test
+    public void init_data_storage_should_return_result() throws MalformedURLException {
+        StorageInitResponse response = doInitDataStorage();
         Assert.assertNotNull(response.getJavascriptUrl());
         Assert.assertNotNull(response.getStorageId());
     }
@@ -41,8 +48,8 @@ public class WirecardServiceTest {
         {
             sir.setIframe(true);
 
-            sir.setShopId("qmore");
-            sir.setOrderIdent("12345");
+            sir.setShopId(SHOP_ID);
+            sir.setOrderIdent(ORDER_IDENT);
             sir.setReturnUrl(new URL("http://localhost:80/wirecard/index.php/frontend/fallback_return.php"));
             sir.setLanguage(LanguageType.EN);
             //sir.setIframeCssUrl(new URL("http://www.google.com/cse/style/look/v2/default.css"));
@@ -54,14 +61,29 @@ public class WirecardServiceTest {
     }
 
     @Test
+    public void read_data_storage_should_return_result() throws MalformedURLException {
+        StorageInitResponse sirr = doInitDataStorage();
+        StorageRequest sr = new StorageRequest(); {
+            sr.setShopId(SHOP_ID);
+            sr.setStorageId(sirr.getStorageId());
+        }
+        StorageResponse srr = wirecardService.readDataStorage(sr);
+        //TODO check response
+    }
+
+    @Test
     public void init_payment_shoud_return_response() throws MalformedURLException {
+        StorageInitResponse sirr = doInitDataStorage();
+
         PaymentRequest pr = new PaymentRequest(); {
-            pr.setOrderIdent("BYRMSBS6KM");
-            pr.setStorageId("df3c9a616aa45c346b80832d52785570");
+            pr.setStorageId(sirr.getStorageId());
+            pr.setShopId(SHOP_ID);
+            pr.setOrderIdent(ORDER_IDENT);
             pr.setPaymentType(PaymentType.CCARD);
+
             pr.setConsumerIpAddress("193.17.194.226");
             pr.setConsumerUserAgent("Safari/7046A194A");
-            pr.setConfirmUrl(new URL("https://ecom-acc.mammut.ch/store//confirm?orderId=12345"));
+            pr.setConfirmUrl(new URL("https://ecom-acc.mammut.ch/store/confirm?orderId=12345"));
 
             pr.setPendingUrl(new URL("http://ecom-acc.mammut.ch/store/"));
             pr.setSuccessUrl(new URL("http://ecom-acc.mammut.ch/store/"));
@@ -73,7 +95,6 @@ public class WirecardServiceTest {
             pr.setCurrency("CHF");
             pr.setAmount("99.99");
             pr.setLanguage(LanguageType.EN);
-            pr.setShopId("qmore");
         }
         String result = wirecardService.initPayment(pr);
         Assert.assertNotNull(result);

@@ -34,6 +34,7 @@ public class PaymentRequestBuilder  extends WirecardAbstractResourceBuilder {
         payload.add(new BasicNameValuePair("cancelURL", paymentRequest.getCancelUrl().toString()));
         payload.add(new BasicNameValuePair("serviceURL", paymentRequest.getServiceURL().toString()));
 
+        payload.add(new BasicNameValuePair("orderIdent", paymentRequest.getOrderIdent().toString()));
         payload.add(new BasicNameValuePair("orderDescription", paymentRequest.getOrderDescription()));
         payload.add(new BasicNameValuePair("currency", paymentRequest.getCurrency()));
         payload.add(new BasicNameValuePair("amount", paymentRequest.getAmount()));

@@ -108,7 +108,8 @@ public class WirecardServiceImpl implements WirecardService {
         try {
             HttpEntity response = httpClient.execute(post).getEntity();
             //TODO
-            return response.getContent().toString();
+            parseResponse(response.getContent());
+            return null;
             //return marshall(parseResponse(response.getContent()));
         } catch (IOException e) {
             e.printStackTrace();
