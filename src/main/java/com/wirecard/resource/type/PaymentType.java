@@ -1,4 +1,4 @@
-package com.wirecard.resource;
+package com.wirecard.resource.type;
 
 public enum PaymentType {
     SELECT("SELECT", "Select", "user may select but only on Wirecard Checkout Page"),

@@ -1,9 +1,12 @@
-package com.wirecard.resource;
+package com.wirecard.resource.request;
 
+
+import com.wirecard.resource.WirecardRequest;
+import com.wirecard.resource.type.*;
 
 import java.net.URL;
 
-public class PaymentRequest {
+public class InitPaymentRequest extends WirecardRequest {
     private LanguageType language;
     private PaymentType paymentType;
     private String amount; //TODO check how to make it double?
@@ -27,7 +30,6 @@ public class PaymentRequest {
     private FinancialInstitutionType financialInstitution;
     private String orderIdent;
     private String storageId;
-    private String shopId;
 
     public LanguageType getLanguage() {
         return language;
@@ -211,13 +213,5 @@ public class PaymentRequest {
 
     public void setStorageId(String storageId) {
         this.storageId = storageId;
-    }
-
-    public String getShopId() {
-        return shopId;
-    }
-
-    public void setShopId(String shopId) {
-        this.shopId = shopId;
     }
 }

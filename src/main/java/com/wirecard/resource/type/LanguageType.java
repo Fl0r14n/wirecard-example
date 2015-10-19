@@ -1,4 +1,4 @@
-package com.wirecard.resource;
+package com.wirecard.resource.type;
 
 public enum LanguageType {
 

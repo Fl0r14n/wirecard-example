@@ -1,11 +1,18 @@
 package com.wirecard.service;
 
-import com.wirecard.resource.*;
+import com.wirecard.resource.request.InitPaymentRequest;
+import com.wirecard.resource.request.InitStorageRequest;
+import com.wirecard.resource.request.ReadStorageRequest;
+import com.wirecard.resource.response.InitPaymentResponse;
+import com.wirecard.resource.response.InitStorageResponse;
+import com.wirecard.resource.response.ReadStorageResponse;
+
+import java.io.IOException;
 
 public interface WirecardService {
-    StorageInitResponse initDataStorage(StorageInitRequest params);
+    InitStorageResponse initDataStorage(InitStorageRequest params) throws IOException;
 
-    StorageResponse readDataStorage(StorageRequest params);
+    ReadStorageResponse readDataStorage(ReadStorageRequest params) throws IOException;
 
-    String initPayment(PaymentRequest params);
+    InitPaymentResponse initPayment(InitPaymentRequest params) throws IOException;
 }

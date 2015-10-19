@@ -1,16 +1,7 @@
 package com.wirecard.resource;
 
-public class StorageRequest {
-    private String shopId;
+public class WirecardResponse {
     private String storageId;
-
-    public String getShopId() {
-        return shopId;
-    }
-
-    public void setShopId(String shopId) {
-        this.shopId = shopId;
-    }
 
     public String getStorageId() {
         return storageId;

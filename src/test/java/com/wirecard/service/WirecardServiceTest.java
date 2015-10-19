@@ -1,16 +1,26 @@
 package com.wirecard.service;
 
 import com.example.WirecardSeamlessExampleApplication;
-import com.wirecard.resource.*;
+import com.wirecard.resource.request.InitPaymentRequest;
+import com.wirecard.resource.request.InitStorageRequest;
+import com.wirecard.resource.request.ReadStorageRequest;
+import com.wirecard.resource.response.InitPaymentResponse;
+import com.wirecard.resource.response.InitStorageResponse;
+import com.wirecard.resource.response.ReadStorageResponse;
+import com.wirecard.resource.type.LanguageType;
+import com.wirecard.resource.type.PaymentType;
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.mockito.internal.matchers.Contains;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import java.net.MalformedURLException;
+import java.io.IOException;
 import java.net.URL;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -18,14 +28,16 @@ import java.net.URL;
 @WebAppConfiguration
 public class WirecardServiceTest {
 
+    private static final String SHOP_ID = "qmore";
+    private static final String ORDER_IDENT = "12345";
     @Autowired
     private WirecardService wirecardService;
 
-    private static final String SHOP_ID = "qmore";
-    private static final String ORDER_IDENT = "12345";
+    @Rule
+    public final ExpectedException exception = ExpectedException.none();
 
-    public StorageInitResponse doInitDataStorage() throws MalformedURLException {
-        StorageInitRequest sir = new StorageInitRequest();
+    public InitStorageResponse doInitDataStorage() throws IOException {
+        InitStorageRequest sir = new InitStorageRequest();
         {
             sir.setShopId(SHOP_ID);
             sir.setOrderIdent(ORDER_IDENT);
@@ -36,15 +48,15 @@ public class WirecardServiceTest {
     }
 
     @Test
-    public void init_data_storage_should_return_result() throws MalformedURLException {
-        StorageInitResponse response = doInitDataStorage();
+    public void init_data_storage_should_return_result() throws IOException {
+        InitStorageResponse response = doInitDataStorage();
         Assert.assertNotNull(response.getJavascriptUrl());
         Assert.assertNotNull(response.getStorageId());
     }
 
     @Test
-    public void init_data_storage_for_iframe_should_return_result() throws MalformedURLException {
-        StorageInitRequest sir = new StorageInitRequest();
+    public void init_data_storage_for_iframe_should_return_result() throws IOException {
+        InitStorageRequest sir = new InitStorageRequest();
         {
             sir.setIframe(true);
 
@@ -52,30 +64,34 @@ public class WirecardServiceTest {
             sir.setOrderIdent(ORDER_IDENT);
             sir.setReturnUrl(new URL("http://localhost:80/wirecard/index.php/frontend/fallback_return.php"));
             sir.setLanguage(LanguageType.EN);
+            //TODO check to see why it does not accept css Url
             //sir.setIframeCssUrl(new URL("http://www.google.com/cse/style/look/v2/default.css"));
             //sir.setIframeCssUrl(new URL("http://localhost:8080/css/pci3_iframe.css"));
         }
-        StorageInitResponse response = wirecardService.initDataStorage(sir);
+        InitStorageResponse response = wirecardService.initDataStorage(sir);
         Assert.assertNotNull(response.getJavascriptUrl());
         Assert.assertNotNull(response.getStorageId());
     }
 
     @Test
-    public void read_data_storage_should_return_result() throws MalformedURLException {
-        StorageInitResponse sirr = doInitDataStorage();
-        StorageRequest sr = new StorageRequest(); {
+    public void read_data_storage_should_return_result() throws IOException {
+        InitStorageResponse sirr = doInitDataStorage();
+        ReadStorageRequest sr = new ReadStorageRequest();
+        {
             sr.setShopId(SHOP_ID);
             sr.setStorageId(sirr.getStorageId());
         }
-        StorageResponse srr = wirecardService.readDataStorage(sr);
-        //TODO check response
+        ReadStorageResponse result = wirecardService.readDataStorage(sr);
+        Assert.assertNotNull(result.getStorageId());
+        //TODO check more from response
     }
 
     @Test
-    public void init_payment_shoud_return_response() throws MalformedURLException {
-        StorageInitResponse sirr = doInitDataStorage();
+    public void init_payment_shoud_return_response() throws IOException {
+        InitStorageResponse sirr = doInitDataStorage();
 
-        PaymentRequest pr = new PaymentRequest(); {
+        InitPaymentRequest pr = new InitPaymentRequest();
+        {
             pr.setStorageId(sirr.getStorageId());
             pr.setShopId(SHOP_ID);
             pr.setOrderIdent(ORDER_IDENT);
@@ -96,7 +112,8 @@ public class WirecardServiceTest {
             pr.setAmount("99.99");
             pr.setLanguage(LanguageType.EN);
         }
-        String result = wirecardService.initPayment(pr);
-        Assert.assertNotNull(result);
+        exception.expect(IOException.class);
+        exception.expectMessage(new Contains("No+payment+information+available+for+this+payment+method"));
+        InitPaymentResponse result = wirecardService.initPayment(pr);
     }
 }

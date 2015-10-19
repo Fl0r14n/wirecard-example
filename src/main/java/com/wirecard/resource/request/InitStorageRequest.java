@@ -1,22 +1,16 @@
-package com.wirecard.resource;
+package com.wirecard.resource.request;
+
+import com.wirecard.resource.WirecardRequest;
+import com.wirecard.resource.type.LanguageType;
 
 import java.net.URL;
 
-public class StorageInitRequest {
-    private String shopId;
+public class InitStorageRequest extends WirecardRequest {
     private String orderIdent;
     private URL returnUrl;
     private LanguageType language;
     private URL iframeCssUrl;
     private boolean iframe;
-
-    public String getShopId() {
-        return shopId;
-    }
-
-    public void setShopId(String shopId) {
-        this.shopId = shopId;
-    }
 
     public String getOrderIdent() {
         return orderIdent;
