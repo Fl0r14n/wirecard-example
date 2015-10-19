@@ -21,7 +21,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
+import java.util.Currency;
+import java.util.Locale;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = WirecardSeamlessExampleApplication.class)
@@ -66,7 +69,7 @@ public class WirecardServiceTest {
             sir.setLanguage(LanguageType.EN);
             //TODO check to see why it does not accept css Url
             //sir.setIframeCssUrl(new URL("http://www.google.com/cse/style/look/v2/default.css"));
-            //sir.setIframeCssUrl(new URL("http://localhost:8080/css/pci3_iframe.css"));
+            //sir.setIframeCssUrl(new URL("http://localhost.8080/css/pci3_iframe.css"));
         }
         InitStorageResponse response = wirecardService.initDataStorage(sir);
         Assert.assertNotNull(response.getJavascriptUrl());
@@ -88,28 +91,30 @@ public class WirecardServiceTest {
 
     @Test
     public void init_payment_shoud_return_response() throws IOException {
-        InitStorageResponse sirr = doInitDataStorage();
+        InitStorageResponse storage = doInitDataStorage();
 
         InitPaymentRequest pr = new InitPaymentRequest();
         {
-            pr.setStorageId(sirr.getStorageId());
+            pr.setStorageId(storage.getStorageId());
             pr.setShopId(SHOP_ID);
             pr.setOrderIdent(ORDER_IDENT);
             pr.setPaymentType(PaymentType.CCARD);
 
             pr.setConsumerIpAddress("193.17.194.226");
             pr.setConsumerUserAgent("Safari/7046A194A");
-            pr.setConfirmUrl(new URL("https://ecom-acc.mammut.ch/store/confirm?orderId=12345"));
 
-            pr.setPendingUrl(new URL("http://ecom-acc.mammut.ch/store/"));
-            pr.setSuccessUrl(new URL("http://ecom-acc.mammut.ch/store/"));
-            pr.setFailureURl(new URL("http://ecom-acc.mammut.ch/store/"));
-            pr.setCancelUrl(new URL("http://ecom-acc.mammut.ch/store/"));
-            pr.setServiceURL(new URL("http://ecom-acc.mammut.ch/store/"));
+            //does not accept other ports than 80 or 443 or localhost. Must fake localhost
+            pr.setConfirmUrl(new URL("http://hybris.local/status"));
+
+            pr.setPendingUrl(new URL("http://hybris.local/status"));
+            pr.setSuccessUrl(new URL("http://hybris.local/status"));
+            pr.setFailureURl(new URL("http://hybris.local/status"));
+            pr.setCancelUrl(new URL("http://hybris.local/status"));
+            pr.setServiceURL(new URL("http://hybris.local/status"));
 
             pr.setOrderDescription("Test Order");
-            pr.setCurrency("CHF");
-            pr.setAmount("99.99");
+            pr.setCurrency(Currency.getInstance(Locale.GERMANY));
+            pr.setAmount(new BigDecimal("99.99"));
             pr.setLanguage(LanguageType.EN);
         }
         exception.expect(IOException.class);

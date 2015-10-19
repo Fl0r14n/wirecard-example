@@ -4,13 +4,15 @@ package com.wirecard.resource.request;
 import com.wirecard.resource.WirecardRequest;
 import com.wirecard.resource.type.*;
 
+import java.math.BigDecimal;
 import java.net.URL;
+import java.util.Currency;
 
 public class InitPaymentRequest extends WirecardRequest {
     private LanguageType language;
     private PaymentType paymentType;
-    private String amount; //TODO check how to make it double?
-    private String currency; //TODO move to enum
+    private BigDecimal amount;
+    private Currency currency;
     private String orderDescription;
     private URL successUrl;
     private URL cancelUrl;
@@ -47,19 +49,19 @@ public class InitPaymentRequest extends WirecardRequest {
         this.paymentType = paymentType;
     }
 
-    public String getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
-    public String getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 
-    public void setCurrency(String currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 

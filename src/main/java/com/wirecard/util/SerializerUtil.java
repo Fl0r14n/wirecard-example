@@ -20,6 +20,7 @@ public class SerializerUtil {
         String line;
         BufferedReader buf = new BufferedReader(new InputStreamReader(is));
         while((line = buf.readLine()) != null) {
+            System.out.println(line);
             if(line.startsWith("error")) {
                 throw new IOException(line);
             }
@@ -49,6 +50,6 @@ public class SerializerUtil {
             buf.append(pair.getValue());
         }
         buf.append(secret);
-        return new String(DigestUtils.sha512Hex(buf.toString()));
+        return DigestUtils.sha512Hex(buf.toString());
     }
 }

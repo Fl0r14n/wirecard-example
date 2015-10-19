@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,21 +30,18 @@ public class InitStorageSerializer implements WirecardSerializer<InitStorageRequ
     private String clientSecret;
 
     @Override
-    public InitStorageResponse from(InputStream content) {
-        Map<String, String> params = null;
-        try {
-            params = serializerUtil.parseResponse(content);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public InitStorageResponse from(InputStream content) throws IOException {
+        Map<String, String> params = serializerUtil.parseResponse(content);
         InitStorageResponse response = new InitStorageResponse();
-        response.setStorageId(params.get("storageId"));
-        response.setJavascriptUrl(URLDecoder.decode(params.get("javascriptUrl")));
+        {
+            response.setStorageId(params.get("storageId"));
+            response.setJavascriptUrl(new URL(URLDecoder.decode(params.get("javascriptUrl"))));
+        }
         return response;
     }
 
     @Override
-    public UrlEncodedFormEntity to(InitStorageRequest request) {
+    public UrlEncodedFormEntity to(InitStorageRequest request) throws IOException {
         List<NameValuePair> payload = new ArrayList<>();
         payload.add(new BasicNameValuePair("customerId", clientId));
         if (request.getShopId() != null) {
@@ -64,10 +61,6 @@ public class InitStorageSerializer implements WirecardSerializer<InitStorageRequ
                 payload.add(new BasicNameValuePair("iframeCssUrl", request.getIframeCssUrl().toString()));
             }
         }
-        try {
-            return new UrlEncodedFormEntity(payload);
-        } catch (UnsupportedEncodingException e) {
-            return null;
-        }
+        return new UrlEncodedFormEntity(payload);
     }
 }

@@ -16,3 +16,4 @@ build/
 out/
 .gradle/
 wirecard-example.iml
+/.nb-gradle/

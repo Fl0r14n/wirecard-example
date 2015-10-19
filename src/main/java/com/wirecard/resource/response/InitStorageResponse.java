@@ -2,14 +2,16 @@ package com.wirecard.resource.response;
 
 import com.wirecard.resource.WirecardResponse;
 
-public class InitStorageResponse extends WirecardResponse {
-    private String javascriptUrl;
+import java.net.URL;
 
-    public String getJavascriptUrl() {
+public class InitStorageResponse extends WirecardResponse {
+    private URL javascriptUrl;
+
+    public URL getJavascriptUrl() {
         return javascriptUrl;
     }
 
-    public void setJavascriptUrl(String javascriptUrl) {
+    public void setJavascriptUrl(URL javascriptUrl) {
         this.javascriptUrl = javascriptUrl;
     }
 }

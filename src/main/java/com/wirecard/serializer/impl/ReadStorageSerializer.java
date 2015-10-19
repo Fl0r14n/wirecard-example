@@ -29,7 +29,7 @@ public class ReadStorageSerializer implements WirecardSerializer<ReadStorageRequ
     private String clientSecret;
 
     @Override
-    public ReadStorageResponse from(InputStream content) {
+    public ReadStorageResponse from(InputStream content) throws IOException {
         Map<String, String> params = null;
         try {
             params = serializerUtil.parseResponse(content);
@@ -43,7 +43,7 @@ public class ReadStorageSerializer implements WirecardSerializer<ReadStorageRequ
     }
 
     @Override
-    public UrlEncodedFormEntity to(ReadStorageRequest request) {
+    public UrlEncodedFormEntity to(ReadStorageRequest request) throws IOException {
         List<NameValuePair> payload = new ArrayList<>();
         payload.add(new BasicNameValuePair("customerId", clientId));
         if (request.getShopId() != null) {

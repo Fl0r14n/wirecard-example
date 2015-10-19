@@ -4,6 +4,6 @@
     <title></title>
 </head>
 <body>
-    HELLO WORLD
+    Payment Done!
 </body>
 </html>

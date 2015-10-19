@@ -13,7 +13,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,23 +30,20 @@ public class InitPaymentSerializer implements WirecardSerializer<InitPaymentRequ
     private String clientSecret;
 
     @Override
-    public InitPaymentResponse from(InputStream content) {
-        Map<String, String> params = null;
-        try {
-            params = serializerUtil.parseResponse(content);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public InitPaymentResponse from(InputStream content) throws IOException {
+        Map<String, String> params = serializerUtil.parseResponse(content);
         InitPaymentResponse response = new InitPaymentResponse();
-        //TODO
+        {
+            response.setRedirectUrl(new URL(URLDecoder.decode(params.get("redirectUrl"))));
+        }
         return response;
     }
 
     @Override
-    public UrlEncodedFormEntity to(InitPaymentRequest request) {
+    public UrlEncodedFormEntity to(InitPaymentRequest request) throws IOException {
         List<NameValuePair> payload = new ArrayList<>();
         payload.add(new BasicNameValuePair("customerId", clientId));
-        if(request.getShopId() != null) {
+        if (request.getShopId() != null) {
             payload.add(new BasicNameValuePair("shopId", request.getShopId()));
         }
         payload.add(new BasicNameValuePair("storageId", request.getStorageId()));
@@ -63,17 +61,12 @@ public class InitPaymentSerializer implements WirecardSerializer<InitPaymentRequ
 
         payload.add(new BasicNameValuePair("orderIdent", request.getOrderIdent().toString()));
         payload.add(new BasicNameValuePair("orderDescription", request.getOrderDescription()));
-        payload.add(new BasicNameValuePair("currency", request.getCurrency()));
-        payload.add(new BasicNameValuePair("amount", request.getAmount()));
+        payload.add(new BasicNameValuePair("currency", request.getCurrency().getCurrencyCode()));
+        payload.add(new BasicNameValuePair("amount", request.getAmount().toString()));
         payload.add(new BasicNameValuePair("language", request.getLanguage().getType()));
 
         payload.add(new BasicNameValuePair("requestFingerprintOrder", serializerUtil.getRequestFingerprintOrder(payload)));
         payload.add(new BasicNameValuePair("requestFingerprint", serializerUtil.buildSHA512(payload, clientSecret)));
-
-        try {
-            return new UrlEncodedFormEntity(payload);
-        } catch (UnsupportedEncodingException e) {
-            return null;
-        }
+        return new UrlEncodedFormEntity(payload);
     }
 }
