@@ -2,6 +2,8 @@ package com.wirecard.serializer.impl;
 
 import com.wirecard.resource.request.ReadStorageRequest;
 import com.wirecard.resource.response.ReadStorageResponse;
+import com.wirecard.resource.type.FinancialInstitutionType;
+import com.wirecard.resource.type.PaymentType;
 import com.wirecard.serializer.WirecardSerializer;
 import com.wirecard.util.SerializerUtil;
 import org.apache.http.NameValuePair;
@@ -13,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -30,15 +32,18 @@ public class ReadStorageSerializer implements WirecardSerializer<ReadStorageRequ
 
     @Override
     public ReadStorageResponse from(InputStream content) throws IOException {
-        Map<String, String> params = null;
-        try {
-            params = serializerUtil.parseResponse(content);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Map<String, String> params = serializerUtil.parseResponse(content);
         ReadStorageResponse response = new ReadStorageResponse();
-        response.setStorageId(params.get("storageId"));
-        //TODO
+        {
+            response.setStorageId(params.get("storageId"));
+            response.setAnonymousPan(params.get("paymentInformation.1.anonymousPan"));
+            response.setMaskedPan(params.get("paymentInformation.1.maskedPan"));
+            response.setFinancialInstitution(FinancialInstitutionType.valueOfType(params.get("paymentInformation.1.financialInstitution")));
+            response.setBrand(params.get("paymentInformation.1.brand"));
+            response.setCardholdername(params.get("paymentInformation.1.cardholdername"));
+            response.setExpiry(URLDecoder.decode(params.get("paymentInformation.1.expiry")));
+            response.setPaymentType(PaymentType.valueOfType(params.get("paymentInformation.1.paymentType")));
+        }
         return response;
     }
 
@@ -51,10 +56,6 @@ public class ReadStorageSerializer implements WirecardSerializer<ReadStorageRequ
         }
         payload.add(new BasicNameValuePair("storageId", request.getStorageId()));
         payload.add(new BasicNameValuePair("requestFingerprint", serializerUtil.buildSHA512(payload, clientSecret)));
-        try {
-            return new UrlEncodedFormEntity(payload);
-        } catch (UnsupportedEncodingException e) {
-            return null;
-        }
+        return new UrlEncodedFormEntity(payload);
     }
 }

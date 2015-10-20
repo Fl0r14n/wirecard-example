@@ -7,7 +7,6 @@ import com.wirecard.resource.request.ReadStorageRequest;
 import com.wirecard.resource.response.InitPaymentResponse;
 import com.wirecard.resource.response.InitStorageResponse;
 import com.wirecard.resource.response.ReadStorageResponse;
-import com.wirecard.resource.type.LanguageType;
 import com.wirecard.resource.type.PaymentType;
 import org.junit.Assert;
 import org.junit.Rule;
@@ -45,7 +44,7 @@ public class WirecardServiceTest {
             sir.setShopId(SHOP_ID);
             sir.setOrderIdent(ORDER_IDENT);
             sir.setReturnUrl(new URL("http://localhost:80/wirecard/index.php/frontend/fallback_return.php"));
-            sir.setLanguage(LanguageType.EN);
+            sir.setLanguage(Locale.GERMANY);
         }
         return wirecardService.initDataStorage(sir);
     }
@@ -66,7 +65,7 @@ public class WirecardServiceTest {
             sir.setShopId(SHOP_ID);
             sir.setOrderIdent(ORDER_IDENT);
             sir.setReturnUrl(new URL("http://localhost:80/wirecard/index.php/frontend/fallback_return.php"));
-            sir.setLanguage(LanguageType.EN);
+            sir.setLanguage(Locale.GERMANY);
             //TODO check to see why it does not accept css Url
             //sir.setIframeCssUrl(new URL("http://www.google.com/cse/style/look/v2/default.css"));
             //sir.setIframeCssUrl(new URL("http://localhost.8080/css/pci3_iframe.css"));
@@ -115,7 +114,7 @@ public class WirecardServiceTest {
             pr.setOrderDescription("Test Order");
             pr.setCurrency(Currency.getInstance(Locale.GERMANY));
             pr.setAmount(new BigDecimal("99.99"));
-            pr.setLanguage(LanguageType.EN);
+            pr.setLanguage(Locale.GERMANY);
         }
         exception.expect(IOException.class);
         exception.expectMessage(new Contains("No+payment+information+available+for+this+payment+method"));

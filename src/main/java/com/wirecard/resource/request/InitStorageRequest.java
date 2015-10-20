@@ -1,14 +1,14 @@
 package com.wirecard.resource.request;
 
 import com.wirecard.resource.WirecardRequest;
-import com.wirecard.resource.type.LanguageType;
 
 import java.net.URL;
+import java.util.Locale;
 
 public class InitStorageRequest extends WirecardRequest {
     private String orderIdent;
     private URL returnUrl;
-    private LanguageType language;
+    private Locale language;
     private URL iframeCssUrl;
     private boolean iframe;
 
@@ -28,11 +28,11 @@ public class InitStorageRequest extends WirecardRequest {
         this.returnUrl = returnUrl;
     }
 
-    public LanguageType getLanguage() {
+    public Locale getLanguage() {
         return language;
     }
 
-    public void setLanguage(LanguageType language) {
+    public void setLanguage(Locale language) {
         this.language = language;
     }
 

@@ -53,4 +53,13 @@ public enum PaymentType {
     public String toString() {
         return type;
     }
+
+    public static PaymentType valueOfType(String value) {
+        for (PaymentType v : values()) {
+            if(v.type.equals(value)) {
+                return v;
+            }
+        }
+        throw new IllegalArgumentException("No enum const " + PaymentType.class + "@type." + value);
+    }
 }

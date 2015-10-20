@@ -7,9 +7,10 @@ import com.wirecard.resource.type.*;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.Currency;
+import java.util.Locale;
 
 public class InitPaymentRequest extends WirecardRequest {
-    private LanguageType language;
+    private Locale language;
     private PaymentType paymentType;
     private BigDecimal amount;
     private Currency currency;
@@ -33,11 +34,11 @@ public class InitPaymentRequest extends WirecardRequest {
     private String orderIdent;
     private String storageId;
 
-    public LanguageType getLanguage() {
+    public Locale getLanguage() {
         return language;
     }
 
-    public void setLanguage(LanguageType language) {
+    public void setLanguage(Locale language) {
         this.language = language;
     }
 

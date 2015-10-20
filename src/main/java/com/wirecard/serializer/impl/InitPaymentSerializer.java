@@ -63,7 +63,7 @@ public class InitPaymentSerializer implements WirecardSerializer<InitPaymentRequ
         payload.add(new BasicNameValuePair("orderDescription", request.getOrderDescription()));
         payload.add(new BasicNameValuePair("currency", request.getCurrency().getCurrencyCode()));
         payload.add(new BasicNameValuePair("amount", request.getAmount().toString()));
-        payload.add(new BasicNameValuePair("language", request.getLanguage().getType()));
+        payload.add(new BasicNameValuePair("language", request.getLanguage().getLanguage()));
 
         payload.add(new BasicNameValuePair("requestFingerprintOrder", serializerUtil.getRequestFingerprintOrder(payload)));
         payload.add(new BasicNameValuePair("requestFingerprint", serializerUtil.buildSHA512(payload, clientSecret)));

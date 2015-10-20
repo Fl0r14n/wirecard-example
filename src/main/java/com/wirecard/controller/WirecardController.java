@@ -2,10 +2,10 @@ package com.wirecard.controller;
 
 import com.wirecard.resource.request.InitPaymentRequest;
 import com.wirecard.resource.request.InitStorageRequest;
+import com.wirecard.resource.request.ReadStorageRequest;
 import com.wirecard.resource.response.InitPaymentResponse;
 import com.wirecard.resource.response.InitStorageResponse;
 import com.wirecard.resource.response.ReadStorageResponse;
-import com.wirecard.resource.type.LanguageType;
 import com.wirecard.resource.type.PaymentType;
 import com.wirecard.service.WirecardService;
 import com.wirecard.util.SerializerUtil;
@@ -49,7 +49,7 @@ public class WirecardController {
             sir.setShopId(SHOP_ID);
             sir.setOrderIdent(ORDER_IDENT);
             sir.setReturnUrl(new URL(requestUrl.getProtocol(), requestUrl.getHost(), requestUrl.getPort(), "/fallback"));
-            sir.setLanguage(LanguageType.EN);
+            sir.setLanguage(Locale.GERMANY);
             sir.setIframe(true);
             //sir.setIframeCssUrl(cssUrl);
         }
@@ -75,8 +75,6 @@ public class WirecardController {
         URL cancelUrl = new URL(requestUrl.getProtocol(), request.getServerName(), requestUrl.getProtocol().equals("http") ? 80 : 443, "/cancel");
         URL serviceUrl = new URL(requestUrl.getProtocol(), request.getServerName(), requestUrl.getProtocol().equals("http") ? 80 : 443, "/service");
 
-        System.out.println(confirmUrl.toString());
-
         InitPaymentRequest pr = new InitPaymentRequest();
         {
             pr.setStorageId(storage.getStorageId());
@@ -100,10 +98,26 @@ public class WirecardController {
             pr.setOrderDescription("Test Order");
             pr.setCurrency(Currency.getInstance(Locale.GERMANY));
             pr.setAmount(new BigDecimal("99.99"));
-            pr.setLanguage(LanguageType.EN);
+            pr.setLanguage(Locale.GERMANY);
         }
         InitPaymentResponse response = wirecardService.initPayment(pr);
         return response;
+    }
+
+    @RequestMapping(
+            value = "/storage",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ReadStorageResponse storage(@RequestBody ReadStorageResponse storage) throws IOException {
+        //Test method for read storage
+        ReadStorageRequest rsr = new ReadStorageRequest();
+        {
+            rsr.setStorageId(storage.getStorageId());
+            rsr.setShopId(SHOP_ID);
+        }
+        return wirecardService.readDataStorage(rsr);
     }
 
     @RequestMapping(value = "/confirm")

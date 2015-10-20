@@ -49,7 +49,7 @@ public class InitStorageSerializer implements WirecardSerializer<InitStorageRequ
         }
         payload.add(new BasicNameValuePair("orderIdent", request.getOrderIdent()));
         payload.add(new BasicNameValuePair("returnUrl", request.getReturnUrl().toString()));
-        payload.add(new BasicNameValuePair("language", request.getLanguage().getType()));
+        payload.add(new BasicNameValuePair("language", request.getLanguage().getLanguage()));
         if (request.isIframe()) {
             payload.add(new BasicNameValuePair("javascriptScriptVersion", "pci3"));
         }

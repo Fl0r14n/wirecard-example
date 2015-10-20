@@ -2,6 +2,7 @@ package com.wirecard.resource.response;
 
 import com.wirecard.resource.WirecardResponse;
 import com.wirecard.resource.type.FinancialInstitutionType;
+import com.wirecard.resource.type.PaymentType;
 
 public class ReadStorageResponse extends WirecardResponse {
     private String anonymousPan;
@@ -18,7 +19,7 @@ public class ReadStorageResponse extends WirecardResponse {
     private String bankBic;
     private String bankAccountIban;
     private String payerPayboxNumber;
-
+    private PaymentType paymentType;
 
     public String getAnonymousPan() {
         return anonymousPan;
@@ -130,5 +131,13 @@ public class ReadStorageResponse extends WirecardResponse {
 
     public void setPayerPayboxNumber(String payerPayboxNumber) {
         this.payerPayboxNumber = payerPayboxNumber;
+    }
+
+    public PaymentType getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(PaymentType paymentType) {
+        this.paymentType = paymentType;
     }
 }
