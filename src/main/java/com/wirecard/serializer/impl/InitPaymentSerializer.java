@@ -51,13 +51,13 @@ public class InitPaymentSerializer implements WirecardSerializer<InitPaymentRequ
 
         payload.add(new BasicNameValuePair("consumerIpAddress", request.getConsumerIpAddress()));
         payload.add(new BasicNameValuePair("consumerUserAgent", request.getConsumerUserAgent()));
-        payload.add(new BasicNameValuePair("confirmURL", request.getConfirmUrl().toString()));
 
-        payload.add(new BasicNameValuePair("pendingURL", request.getPendingUrl().toString()));
-        payload.add(new BasicNameValuePair("successURL", request.getSuccessUrl().toString()));
-        payload.add(new BasicNameValuePair("failureURL", request.getFailureURl().toString()));
-        payload.add(new BasicNameValuePair("cancelURL", request.getCancelUrl().toString()));
-        payload.add(new BasicNameValuePair("serviceURL", request.getServiceURL().toString()));
+        payload.add(new BasicNameValuePair("confirmUrl", request.getConfirmUrl().toString()));
+        payload.add(new BasicNameValuePair("pendingUrl", request.getPendingUrl().toString()));
+        payload.add(new BasicNameValuePair("successUrl", request.getSuccessUrl().toString()));
+        payload.add(new BasicNameValuePair("failureUrl", request.getFailureURl().toString()));
+        payload.add(new BasicNameValuePair("cancelUrl", request.getCancelUrl().toString()));
+        payload.add(new BasicNameValuePair("serviceUrl", request.getServiceURL().toString()));
 
         payload.add(new BasicNameValuePair("orderIdent", request.getOrderIdent().toString()));
         payload.add(new BasicNameValuePair("orderDescription", request.getOrderDescription()));

@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title></title>
+    <title>Successful Payment</title>
 </head>
 <body>
-    Payment Done!
+The payment has been successfully completed.
 </body>
 </html>
