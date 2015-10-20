@@ -42,7 +42,6 @@ public class WirecardController {
 
         URL requestUrl = new URL(request.getRequestURL().toString());
         URL cssUrl = new URL(requestUrl.getProtocol(), request.getServerName(), requestUrl.getProtocol().equals("http") ? 80 : 443, "/css/pci3_iframe_style2.css");
-        System.out.println(cssUrl);
 
         InitStorageRequest sir = new InitStorageRequest();
         {
@@ -51,7 +50,7 @@ public class WirecardController {
             sir.setReturnUrl(new URL(requestUrl.getProtocol(), requestUrl.getHost(), requestUrl.getPort(), "/fallback"));
             sir.setLanguage(Locale.GERMANY);
             sir.setIframe(true);
-            //sir.setIframeCssUrl(cssUrl);
+            sir.setIframeCssUrl(cssUrl);
         }
 
         InitStorageResponse response = wirecardService.initDataStorage(sir);

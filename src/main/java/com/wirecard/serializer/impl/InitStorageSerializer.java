@@ -28,6 +28,8 @@ public class InitStorageSerializer implements WirecardSerializer<InitStorageRequ
     private String clientId;
     @Value("${wirecard.clientSecret}")
     private String clientSecret;
+    @Value("${wirecard.isLocalServer}")
+    private boolean isLocalServer;
 
     @Override
     public InitStorageResponse from(InputStream content) throws IOException {
@@ -57,7 +59,7 @@ public class InitStorageSerializer implements WirecardSerializer<InitStorageRequ
         if (request.isIframe()) {
             payload.add(new BasicNameValuePair("creditcardShowCardholderNameField", "true"));
             payload.add(new BasicNameValuePair("creditcardShowCvcField", "true"));
-            if (request.getIframeCssUrl() != null) {
+            if (!isLocalServer && request.getIframeCssUrl() != null) {
                 payload.add(new BasicNameValuePair("iframeCssUrl", request.getIframeCssUrl().toString()));
             }
         }

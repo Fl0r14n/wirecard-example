@@ -59,7 +59,7 @@ public class InitPaymentSerializer implements WirecardSerializer<InitPaymentRequ
         payload.add(new BasicNameValuePair("cancelUrl", request.getCancelUrl().toString()));
         payload.add(new BasicNameValuePair("serviceUrl", request.getServiceURL().toString()));
 
-        payload.add(new BasicNameValuePair("orderIdent", request.getOrderIdent().toString()));
+        payload.add(new BasicNameValuePair("orderIdent", request.getOrderIdent()));
         payload.add(new BasicNameValuePair("orderDescription", request.getOrderDescription()));
         payload.add(new BasicNameValuePair("currency", request.getCurrency().getCurrencyCode()));
         payload.add(new BasicNameValuePair("amount", request.getAmount().toString()));
