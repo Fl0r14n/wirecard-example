@@ -5,6 +5,7 @@ import com.wirecard.resource.WirecardResponse;
 import java.net.URL;
 
 public class InitPaymentResponse extends WirecardResponse {
+
     URL redirectUrl;
 
     public URL getRedirectUrl() {

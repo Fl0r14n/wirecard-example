@@ -1,6 +1,7 @@
 package com.wirecard.resource.type;
 
 public enum PaymentType {
+
     SELECT("SELECT", "Select", "user may select but only on Wirecard Checkout Page"),
     BANCONTACT_MISTERCASH("BANCONTACT_MISTERCASH", "Bancontact/Mister Cash", ""),
     CCARD("CCARD", "Credit Card, Maestro SecureCode", ""),
@@ -29,13 +30,12 @@ public enum PaymentType {
     TRUSTPAY("TRUSTPAY", "TrustPay", ""),
     VOUCHER("VOUCHER", "My Voucher", "");
 
-    private String type, name, description;
-
     PaymentType(String type, String name, String description) {
         this.type = type;
         this.name = name;
         this.description = description;
     }
+    private final String type, name, description;
 
     public String getType() {
         return type;
@@ -56,10 +56,10 @@ public enum PaymentType {
 
     public static PaymentType valueOfType(String value) {
         for (PaymentType v : values()) {
-            if(v.type.equals(value)) {
+            if (v.type.equals(value)) {
                 return v;
             }
         }
-        throw new IllegalArgumentException("No enum const " + PaymentType.class + "@type." + value);
+        return null;
     }
 }

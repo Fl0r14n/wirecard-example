@@ -1,15 +1,16 @@
 package com.wirecard.resource.type;
 
 public enum YesNoType {
-    YES (true,"yes"),
-    NO (false, "no");
+
+    YES(true, "yes"),
+    NO(false, "no");
 
     YesNoType(boolean type, String value) {
         this.type = type;
         this.value = value;
     }
-    private boolean type;
-    private String value;
+    private final boolean type;
+    private final String value;
 
     public boolean isType() {
         return type;

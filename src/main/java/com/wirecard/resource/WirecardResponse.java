@@ -1,6 +1,7 @@
 package com.wirecard.resource;
 
 public class WirecardResponse {
+
     private String storageId;
 
     public String getStorageId() {

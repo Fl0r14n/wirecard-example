@@ -5,6 +5,7 @@ import com.wirecard.resource.type.FinancialInstitutionType;
 import com.wirecard.resource.type.PaymentType;
 
 public class ReadStorageResponse extends WirecardResponse {
+
     private String anonymousPan;
     private String maskedPan;
     private FinancialInstitutionType financialInstitution;

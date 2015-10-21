@@ -1,6 +1,5 @@
 package com.wirecard.resource.request;
 
-
 import com.wirecard.resource.WirecardRequest;
 import com.wirecard.resource.type.*;
 
@@ -10,6 +9,7 @@ import java.util.Currency;
 import java.util.Locale;
 
 public class InitPaymentRequest extends WirecardRequest {
+
     private Locale language;
     private PaymentType paymentType;
     private BigDecimal amount;

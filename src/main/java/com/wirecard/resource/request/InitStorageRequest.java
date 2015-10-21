@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.Locale;
 
 public class InitStorageRequest extends WirecardRequest {
+
     private String orderIdent;
     private URL returnUrl;
     private Locale language;

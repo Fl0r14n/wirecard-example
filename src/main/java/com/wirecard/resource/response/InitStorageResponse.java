@@ -5,6 +5,7 @@ import com.wirecard.resource.WirecardResponse;
 import java.net.URL;
 
 public class InitStorageResponse extends WirecardResponse {
+
     private URL javascriptUrl;
 
     public URL getJavascriptUrl() {

@@ -36,13 +36,15 @@ public class ReadStorageSerializer implements WirecardSerializer<ReadStorageRequ
         ReadStorageResponse response = new ReadStorageResponse();
         {
             response.setStorageId(params.get("storageId"));
-            response.setAnonymousPan(params.get("paymentInformation.1.anonymousPan"));
-            response.setMaskedPan(params.get("paymentInformation.1.maskedPan"));
-            response.setFinancialInstitution(FinancialInstitutionType.valueOfType(params.get("paymentInformation.1.financialInstitution")));
-            response.setBrand(params.get("paymentInformation.1.brand"));
-            response.setCardholdername(params.get("paymentInformation.1.cardholdername"));
-            response.setExpiry(URLDecoder.decode(params.get("paymentInformation.1.expiry")));
-            response.setPaymentType(PaymentType.valueOfType(params.get("paymentInformation.1.paymentType")));
+            if (Integer.parseInt(params.get("paymentInformations")) > 0) {
+                response.setAnonymousPan(params.get("paymentInformation.1.anonymousPan"));
+                response.setMaskedPan(params.get("paymentInformation.1.maskedPan"));
+                response.setFinancialInstitution(FinancialInstitutionType.valueOfType(params.get("paymentInformation.1.financialInstitution")));
+                response.setBrand(params.get("paymentInformation.1.brand"));
+                response.setCardholdername(params.get("paymentInformation.1.cardholdername"));
+                response.setExpiry(URLDecoder.decode(params.get("paymentInformation.1.expiry")));
+                response.setPaymentType(PaymentType.valueOfType(params.get("paymentInformation.1.paymentType")));
+            }
         }
         return response;
     }

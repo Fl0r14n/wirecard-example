@@ -66,9 +66,7 @@ public class WirecardServiceTest {
             sir.setOrderIdent(ORDER_IDENT);
             sir.setReturnUrl(new URL("http://localhost:80/wirecard/index.php/frontend/fallback_return.php"));
             sir.setLanguage(Locale.GERMANY);
-            //TODO check to see why it does not accept css Url
-            //sir.setIframeCssUrl(new URL("http://www.google.com/cse/style/look/v2/default.css"));
-            //sir.setIframeCssUrl(new URL("http://localhost.8080/css/pci3_iframe.css"));
+            sir.setIframeCssUrl(new URL("http://localhost.8080/css/pci3_iframe.css"));
         }
         InitStorageResponse response = wirecardService.initDataStorage(sir);
         Assert.assertNotNull(response.getJavascriptUrl());
@@ -85,7 +83,6 @@ public class WirecardServiceTest {
         }
         ReadStorageResponse result = wirecardService.readDataStorage(sr);
         Assert.assertNotNull(result.getStorageId());
-        //TODO check more from response
     }
 
     @Test
