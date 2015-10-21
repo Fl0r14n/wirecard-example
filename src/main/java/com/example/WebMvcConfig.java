@@ -9,7 +9,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableWebMvc
-public class WebMvcConfig extends WebMvcConfigurerAdapter{
+public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
@@ -23,5 +23,4 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter{
         resolver.setSuffix(".jsp");
         return resolver;
     }
-
 }

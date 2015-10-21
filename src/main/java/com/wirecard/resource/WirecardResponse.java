@@ -11,4 +11,11 @@ public class WirecardResponse {
     public void setStorageId(String storageId) {
         this.storageId = storageId;
     }
+
+    @Override
+    public String toString() {
+        return "WirecardResponse{" +
+                "storageId='" + storageId + '\'' +
+                '}';
+    }
 }

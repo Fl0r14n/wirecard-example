@@ -52,4 +52,16 @@ public class InitStorageRequest extends WirecardRequest {
     public void setIframe(boolean iframe) {
         this.iframe = iframe;
     }
+
+    @Override
+    public String toString() {
+        return "InitStorageRequest{" +
+                "orderIdent='" + orderIdent + '\'' +
+                ", returnUrl=" + returnUrl +
+                ", language=" + language +
+                ", iframeCssUrl=" + iframeCssUrl +
+                ", iframe=" + iframe +
+                "\n" + super.toString() +
+                "}";
+    }
 }

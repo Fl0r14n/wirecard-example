@@ -29,6 +29,7 @@
                     var DONE = this.DONE || 4;
                     if (this.readyState === DONE && this.status === 200) {
                         var data = JSON.parse(this.response);
+                        console.log(data);
                         window.location = data.redirectUrl;
                     }
                 };

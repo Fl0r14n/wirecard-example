@@ -24,4 +24,13 @@ public enum YesNoType {
     public String toString() {
         return value;
     }
+    
+    public static YesNoType valueOfDescription(String description) {
+        for(YesNoType v: values()) {
+            if(v.value.equalsIgnoreCase(description)) {
+                return v;
+            }
+        }
+        return null;
+    }
 }

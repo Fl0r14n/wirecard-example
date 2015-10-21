@@ -15,4 +15,12 @@ public class InitStorageResponse extends WirecardResponse {
     public void setJavascriptUrl(URL javascriptUrl) {
         this.javascriptUrl = javascriptUrl;
     }
+
+    @Override
+    public String toString() {
+        return "InitStorageResponse{" +
+                "javascriptUrl=" + javascriptUrl +
+                "\n" + super.toString() +
+                "}";
+    }
 }

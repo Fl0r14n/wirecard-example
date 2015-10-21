@@ -13,4 +13,12 @@ public class ReadStorageRequest extends WirecardRequest {
     public void setStorageId(String storageId) {
         this.storageId = storageId;
     }
+
+    @Override
+    public String toString() {
+        return "ReadStorageRequest{" +
+                "storageId='" + storageId + '\'' +
+                "\n" + super.toString() +
+                "}";
+    }
 }

@@ -1,7 +1,10 @@
 package com.wirecard.resource.request;
 
 import com.wirecard.resource.WirecardRequest;
-import com.wirecard.resource.type.*;
+import com.wirecard.resource.type.FinancialInstitutionType;
+import com.wirecard.resource.type.PaymentType;
+import com.wirecard.resource.type.TransactionType;
+import com.wirecard.resource.type.YesNoType;
 
 import java.math.BigDecimal;
 import java.net.URL;
@@ -216,5 +219,35 @@ public class InitPaymentRequest extends WirecardRequest {
 
     public void setStorageId(String storageId) {
         this.storageId = storageId;
+    }
+
+    @Override
+    public String toString() {
+        return "InitPaymentRequest{" +
+                "language=" + language +
+                ", paymentType=" + paymentType +
+                ", amount=" + amount +
+                ", currency=" + currency +
+                ", orderDescription='" + orderDescription + '\'' +
+                ", successUrl=" + successUrl +
+                ", cancelUrl=" + cancelUrl +
+                ", failureURl=" + failureURl +
+                ", serviceURL=" + serviceURL +
+                ", confirmUrl=" + confirmUrl +
+                ", consumerIpAddress='" + consumerIpAddress + '\'' +
+                ", consumerUserAgent='" + consumerUserAgent + '\'' +
+                ", pendingUrl=" + pendingUrl +
+                ", noScriptInfoUrl=" + noScriptInfoUrl +
+                ", orderNumber=" + orderNumber +
+                ", windowName='" + windowName + '\'' +
+                ", duplicateRequestCheck=" + duplicateRequestCheck +
+                ", customerStatement='" + customerStatement + '\'' +
+                ", orderReference='" + orderReference + '\'' +
+                ", transactionIdentifier=" + transactionIdentifier +
+                ", financialInstitution=" + financialInstitution +
+                ", orderIdent='" + orderIdent + '\'' +
+                ", storageId='" + storageId + '\'' +
+                "\n" + super.toString() +
+                "}";
     }
 }

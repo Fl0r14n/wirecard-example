@@ -15,4 +15,12 @@ public class InitPaymentResponse extends WirecardResponse {
     public void setRedirectUrl(URL redirectUrl) {
         this.redirectUrl = redirectUrl;
     }
+
+    @Override
+    public String toString() {
+        return "InitPaymentResponse{" +
+                "redirectUrl=" + redirectUrl +
+                "\n" + super.toString() +
+                "}";
+    }
 }

@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +22,7 @@ import java.util.Map;
 public class InitPaymentSerializer implements WirecardSerializer<InitPaymentRequest, InitPaymentResponse> {
 
     @Autowired
-    SerializerUtil serializerUtil;
+    private SerializerUtil serializerUtil;
     @Value("${wirecard.clientId}")
     private String clientId;
     @Value("${wirecard.clientSecret}")
@@ -34,7 +33,7 @@ public class InitPaymentSerializer implements WirecardSerializer<InitPaymentRequ
         Map<String, String> params = serializerUtil.parseResponse(content);
         InitPaymentResponse response = new InitPaymentResponse();
         {
-            response.setRedirectUrl(new URL(URLDecoder.decode(params.get("redirectUrl"))));
+            response.setRedirectUrl(new URL(params.get("redirectUrl")));
         }
         return response;
     }

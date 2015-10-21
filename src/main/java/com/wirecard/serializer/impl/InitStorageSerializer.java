@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +22,7 @@ import java.util.Map;
 public class InitStorageSerializer implements WirecardSerializer<InitStorageRequest, InitStorageResponse> {
 
     @Autowired
-    SerializerUtil serializerUtil;
+    private SerializerUtil serializerUtil;
     @Value("${wirecard.clientId}")
     private String clientId;
     @Value("${wirecard.clientSecret}")
@@ -37,7 +36,7 @@ public class InitStorageSerializer implements WirecardSerializer<InitStorageRequ
         InitStorageResponse response = new InitStorageResponse();
         {
             response.setStorageId(params.get("storageId"));
-            response.setJavascriptUrl(new URL(URLDecoder.decode(params.get("javascriptUrl"))));
+            response.setJavascriptUrl(new URL(params.get("javascriptUrl")));
         }
         return response;
     }

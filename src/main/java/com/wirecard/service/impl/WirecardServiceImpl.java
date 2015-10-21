@@ -3,9 +3,11 @@ package com.wirecard.service.impl;
 import com.wirecard.resource.request.InitPaymentRequest;
 import com.wirecard.resource.request.InitStorageRequest;
 import com.wirecard.resource.request.ReadStorageRequest;
+import com.wirecard.resource.response.ConfirmedPaymentResponse;
 import com.wirecard.resource.response.InitPaymentResponse;
 import com.wirecard.resource.response.InitStorageResponse;
 import com.wirecard.resource.response.ReadStorageResponse;
+import com.wirecard.serializer.impl.ConfirmedPaymentSerializer;
 import com.wirecard.serializer.impl.InitPaymentSerializer;
 import com.wirecard.serializer.impl.InitStorageSerializer;
 import com.wirecard.serializer.impl.ReadStorageSerializer;
@@ -19,6 +21,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
 
 @Service
 public class WirecardServiceImpl implements WirecardService {
@@ -41,6 +44,8 @@ public class WirecardServiceImpl implements WirecardService {
     @Autowired
     private ReadStorageSerializer readStorageSerializer;
 
+    @Autowired
+    private ConfirmedPaymentSerializer confirmedPaymentSerializer;
 
     @Override
     public InitStorageResponse initDataStorage(InitStorageRequest params) throws IOException {
@@ -67,5 +72,10 @@ public class WirecardServiceImpl implements WirecardService {
         post.setEntity(initPaymentSerializer.to(params));
         HttpEntity response = httpClient.execute(post).getEntity();
         return initPaymentSerializer.from(response.getContent());
+    }
+
+    @Override
+    public ConfirmedPaymentResponse readPaymentConfirmation(HttpServletRequest request) throws IOException {
+        return confirmedPaymentSerializer.from(request.getInputStream());
     }
 }

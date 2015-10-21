@@ -114,7 +114,7 @@ public class WirecardServiceTest {
             pr.setLanguage(Locale.GERMANY);
         }
         exception.expect(IOException.class);
-        exception.expectMessage(new Contains("No+payment+information+available+for+this+payment+method"));
+        exception.expectMessage(new Contains("No payment information available for this payment method"));
         InitPaymentResponse result = wirecardService.initPayment(pr);
     }
 }

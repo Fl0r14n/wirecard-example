@@ -3,12 +3,12 @@ package com.wirecard.controller;
 import com.wirecard.resource.request.InitPaymentRequest;
 import com.wirecard.resource.request.InitStorageRequest;
 import com.wirecard.resource.request.ReadStorageRequest;
+import com.wirecard.resource.response.ConfirmedPaymentResponse;
 import com.wirecard.resource.response.InitPaymentResponse;
 import com.wirecard.resource.response.InitStorageResponse;
 import com.wirecard.resource.response.ReadStorageResponse;
 import com.wirecard.resource.type.PaymentType;
 import com.wirecard.service.WirecardService;
-import com.wirecard.util.SerializerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -24,14 +24,16 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.util.Currency;
 import java.util.Locale;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 public class WirecardController {
+    
+    private static final Logger L = LoggerFactory.getLogger(WirecardController.class);
 
     private static final String SHOP_ID = "qmore";
     private static final String ORDER_IDENT = "12345";
-    @Autowired
-    private SerializerUtil serializerUtil;
     @Autowired
     private WirecardService wirecardService;
 
@@ -122,39 +124,42 @@ public class WirecardController {
     @RequestMapping(value = "/confirm")
     public void confirm(HttpServletRequest request) throws IOException {
         //TODO wirecard does not call confirm why?
-        System.out.println("Confirm");
-        System.out.println(request.getRequestURL().toString());
-        System.out.println(request.getMethod());
-        System.out.println(request.getQueryString());
-        serializerUtil.parseResponse(request.getInputStream());
+        L.info("Confirm");
+        ConfirmedPaymentResponse response = wirecardService.readPaymentConfirmation(request);
+        L.info(response.toString());
     }
 
     @RequestMapping(value = "/pending")
     public ModelAndView pending() throws IOException {
+        L.info("Pending");
         return new ModelAndView("pending");
     }
 
     @RequestMapping(value = "/success")
     public ModelAndView success() throws IOException {
+        L.info("Success");
         return new ModelAndView("success");
     }
 
     @RequestMapping(value = "/failure")
     public ModelAndView failure() throws IOException {
+        L.info("Failure");
         return new ModelAndView("failure");
     }
 
     @RequestMapping(value = "/cancel")
     public ModelAndView cancel() throws IOException {
+        L.info("Cancel");
         return new ModelAndView("cancel");
     }
 
     @RequestMapping(value = "/service")
     public ModelAndView service() throws IOException {
+        L.info("Service");
         return new ModelAndView("service");
     }
 
-    @RequestMapping(value = "/fallback")
+    @RequestMapping(value = "/fallback")    
     public void fallback() {
         //Dummy callback for wirecard
     }

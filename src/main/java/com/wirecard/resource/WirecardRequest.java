@@ -11,4 +11,11 @@ public class WirecardRequest {
     public void setShopId(String shopId) {
         this.shopId = shopId;
     }
+
+    @Override
+    public String toString() {
+        return "WirecardRequest{" +
+                "shopId='" + shopId + '\'' +
+                '}';
+    }
 }

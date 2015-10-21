@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +23,7 @@ import java.util.Map;
 public class ReadStorageSerializer implements WirecardSerializer<ReadStorageRequest, ReadStorageResponse> {
 
     @Autowired
-    SerializerUtil serializerUtil;
+    private SerializerUtil serializerUtil;
     @Value("${wirecard.clientId}")
     private String clientId;
     @Value("${wirecard.clientSecret}")
@@ -42,7 +41,7 @@ public class ReadStorageSerializer implements WirecardSerializer<ReadStorageRequ
                 response.setFinancialInstitution(FinancialInstitutionType.valueOfType(params.get("paymentInformation.1.financialInstitution")));
                 response.setBrand(params.get("paymentInformation.1.brand"));
                 response.setCardholdername(params.get("paymentInformation.1.cardholdername"));
-                response.setExpiry(URLDecoder.decode(params.get("paymentInformation.1.expiry")));
+                response.setExpiry(params.get("paymentInformation.1.expiry"));
                 response.setPaymentType(PaymentType.valueOfType(params.get("paymentInformation.1.paymentType")));
             }
         }
