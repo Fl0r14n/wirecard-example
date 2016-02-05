@@ -97,8 +97,8 @@ public class WirecardPaymentController {
 
             //order
             pr.setOrderDescription("Test Order");
-            pr.setOrderNumber(12345L);
-            pr.setOrderReference("orderReference");
+            //pr.setOrderNumber(12345L);
+            pr.setOrderReference(ORDER_IDENT);
             pr.setCurrency(Currency.getInstance(Locale.GERMANY));
             pr.setAmount(new BigDecimal("99.99"));
             pr.setLanguage(Locale.GERMANY);

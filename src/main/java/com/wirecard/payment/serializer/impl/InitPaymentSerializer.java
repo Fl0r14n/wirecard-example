@@ -44,11 +44,18 @@ public class InitPaymentSerializer implements WirecardPaymentSerializer<InitPaym
         if (request.getShopId() != null) {
             payload.add(new BasicNameValuePair("shopId", request.getShopId()));
         }
-        payload.add(new BasicNameValuePair("storageId", request.getStorageId()));
-        payload.add(new BasicNameValuePair("paymentType", request.getPaymentType().getType()));
+        if (request.getStorageId() != null) {
+            payload.add(new BasicNameValuePair("storageId", request.getStorageId()));
+        }
+        if (request.getPaymentType() != null) {
+            payload.add(new BasicNameValuePair("paymentType", request.getPaymentType().getType()));
+        }
 
         payload.add(new BasicNameValuePair("consumerIpAddress", request.getConsumerIpAddress()));
         payload.add(new BasicNameValuePair("consumerUserAgent", request.getConsumerUserAgent()));
+        if (request.getWindowName() != null) {
+            payload.add(new BasicNameValuePair("windowName", request.getWindowName().toString()));
+        }
 
         payload.add(new BasicNameValuePair("confirmUrl", request.getConfirmUrl().toString()));
         payload.add(new BasicNameValuePair("pendingUrl", request.getPendingUrl().toString()));
@@ -56,12 +63,35 @@ public class InitPaymentSerializer implements WirecardPaymentSerializer<InitPaym
         payload.add(new BasicNameValuePair("failureUrl", request.getFailureURl().toString()));
         payload.add(new BasicNameValuePair("cancelUrl", request.getCancelUrl().toString()));
         payload.add(new BasicNameValuePair("serviceUrl", request.getServiceURL().toString()));
+        if (request.getNoScriptInfoUrl() != null) {
+            payload.add(new BasicNameValuePair("noScriptInfoUrl", request.getNoScriptInfoUrl().toString()));
+        }
 
-        payload.add(new BasicNameValuePair("orderIdent", request.getOrderIdent()));
+        if (request.getOrderIdent() != null) {
+            payload.add(new BasicNameValuePair("orderIdent", request.getOrderIdent()));
+        }
+        if (request.getOrderNumber() != null) {
+            payload.add(new BasicNameValuePair("orderNumber", request.getOrderNumber().toString()));
+        }
         payload.add(new BasicNameValuePair("orderDescription", request.getOrderDescription()));
+        payload.add(new BasicNameValuePair("orderReference", request.getOrderReference()));
+
         payload.add(new BasicNameValuePair("currency", request.getCurrency().getCurrencyCode()));
         payload.add(new BasicNameValuePair("amount", request.getAmount().toString()));
         payload.add(new BasicNameValuePair("language", request.getLanguage().getLanguage()));
+
+        if (request.getCustomerStatement() != null) {
+            payload.add(new BasicNameValuePair("customerStatement", request.getCustomerStatement().toString()));
+        }
+        if (request.getDuplicateRequestCheck() != null) {
+            payload.add(new BasicNameValuePair("duplicateRequestCheck", request.getDuplicateRequestCheck().getValue()));
+        }
+        if (request.getTransactionIdentifier() != null) {
+            payload.add(new BasicNameValuePair("transactionIdentifier", request.getTransactionIdentifier().toString()));
+        }
+        if (request.getFinancialInstitution() != null) {
+            payload.add(new BasicNameValuePair("financialInstitution", request.getFinancialInstitution().toString()));
+        }
 
         payload.add(new BasicNameValuePair("requestFingerprintOrder", serializerUtil.getRequestFingerprintOrder(payload)));
         payload.add(new BasicNameValuePair("requestFingerprint", serializerUtil.buildSHA512(payload, clientSecret)));

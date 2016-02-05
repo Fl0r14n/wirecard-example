@@ -3,14 +3,14 @@ package com.wirecard.payment.resource.type;
 public enum FinancialInstitutionType {
 
     //BANCONTACT_MISTERCASH
-    BANCOMAT_MISTER_CASH("Bancontact/Mister Cash", "Bancontact/Mister Cash"),
+    BANCONTACT_MISTER_CASH("Bancontact/Mister Cash", "Bancontact/Mister Cash"),
     //CCARD / CCARD-MOTO
     MASTERCARD("MasterCard", "MasterCard"),
     MAESTRO("Maestro", "Maestro SecureCode"),
     VISA("Visa", "Visa"),
     VISA_VERIFIED("VbV", "Verified by Visa"),
     AMEX("Amex", "American Express"),
-    AMERICAN_EXPRES_SAFEKEY("amexsafekey", "American Express SafeKey"),
+    AMERICAN_EXPRESS_SAFEKEY("amexsafekey", "American Express SafeKey"),
     DINERS("Diners", "Diners Club"),
     DISCOVER("Discover", "Discover"),
     JCB("JCB", "JCB"),
