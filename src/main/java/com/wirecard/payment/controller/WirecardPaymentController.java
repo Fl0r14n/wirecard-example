@@ -26,14 +26,16 @@ import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.wirecard.payment.service.WirecardPaymentService;
+import org.springframework.beans.factory.annotation.Value;
 
 @Controller
 public class WirecardPaymentController {
 
     private static final Logger L = LoggerFactory.getLogger(WirecardPaymentController.class);
-
-    private static final String SHOP_ID = "qmore";
     private static final String ORDER_IDENT = "12345";
+    
+    @Value("${wirecard.shopId}")
+    private String SHOP_ID;
     @Autowired
     private WirecardPaymentService wirecardService;
 
